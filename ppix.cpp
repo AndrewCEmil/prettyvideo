@@ -265,13 +265,14 @@ int main(int argc, char **argv) {
     int opt;
     char *inval = NULL;
     int num_threads = 8;
-    int width = 1024;
-    int height = 1024;
-    int framecount = 512;
+    int width = 512;
+    int height = 512;
+    int framecount = 256;
     int bitdepth = 32;
     int seed = time(NULL);
     string dagstring = "tripixel triavg trix trit";
-    while ((opt = getopt(argc, argv, "w:h:f:t:b:s:d:i:")) != -1) {
+    DAGContainer *dag = NULL;
+    while ((opt = getopt(argc, argv, "w:h:f:t:b:s:d:i:r")) != -1) {
       cout << "processing: " << (char)opt << endl;
       switch (opt) {
         case 'w':
@@ -295,6 +296,10 @@ int main(int argc, char **argv) {
         case 'd':
           dagstring = string(optarg);
           break;
+        case 'r':
+          srand(seed);
+          dag = generateTREE();
+          break;
         default:
           cout << "Unknown flag" << endl;
           exit(1);
@@ -304,7 +309,9 @@ int main(int argc, char **argv) {
     double curT;
     //first get dag
     cout << "Generating TREE" << endl;
-    DAGContainer *dag = DAGGenerator::generateFromString(dagstring);
+    if(dag == NULL) {
+        dag = DAGGenerator::generateFromString(dagstring);
+    }
     printDag(dag);
     video_generator *vg = new video_generator(width, height, framecount, num_threads, bitdepth);
     vg->generateFromDAG(dag);
