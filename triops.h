@@ -15,6 +15,7 @@ class triop {
     std::vector<triedge *> myOutputs;
     std::vector<std::shared_ptr<trival>> inputVals;
     virtual void execute() = 0;
+    virtual std::string get_shader_string() { return ""; };
     triop *copyMe();
     static int getId();
     void checkAndExecute();
@@ -34,6 +35,7 @@ class tridouble : public triop {
   public:
     tridouble();
     void execute();
+    std::string get_shader_string();
 };
 
 class trimult : public triop {
@@ -139,6 +141,7 @@ class tripixel : public triop {
     tripixel();
     std::shared_ptr<trival> pixelVal;
     void execute();
+    std::string get_shader_string();
 };
 
 class trigenerator : public triop {
@@ -153,18 +156,21 @@ class trix : public trigenerator {
   public:
     trix();
     void execute();
+    std::string get_shader_string();
 };
 
 class triy : public trigenerator {
   public:
     triy();
     void execute();
+    std::string get_shader_string();
 };
 
 class trit : public trigenerator {
   public:
     trit();
     void execute();
+    std::string get_shader_string();
 };
 
 class triconstpic : public trigenerator {

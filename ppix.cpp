@@ -246,6 +246,19 @@ video_generator::video_generator(int width, int height, int framecount, int thre
     _bitdepth = bitdepth;
 }
 
+string shader_generator::generateFromDAG(DAGContainer *dag) {
+    ostringstream ss;
+    ss << "precision mediump float;" << endl << "varying vec2 position;" << endl << "void main() {" << endl;
+    string startstring = ss.str();
+    ostringstream es;
+    es << "gl_FragColor.a = 1.0;" << endl << "}" << endl;
+    string endstring = es.str();
+    string programstring = dag->pixel->get_shader_string();
+    startstring += programstring;
+    startstring += endstring;
+    return startstring;
+}
+
 void video_generator::generateFromDAG(DAGContainer *dag) {
     //TODO chop out and replace with image_generator
     int frameSection = _framecount / _threads;
@@ -261,6 +274,8 @@ void video_generator::generateFromDAG(DAGContainer *dag) {
     
 }
 
+
+
 int main(int argc, char **argv) {
     int opt;
     char *inval = NULL;
@@ -270,9 +285,10 @@ int main(int argc, char **argv) {
     int framecount = 256;
     int bitdepth = 32;
     int seed = time(NULL);
+    bool make_shader = false;
     string dagstring = "tripixel triavg trix trit";
     DAGContainer *dag = NULL;
-    while ((opt = getopt(argc, argv, "w:h:f:t:b:s:d:i:r")) != -1) {
+    while ((opt = getopt(argc, argv, "w:h:f:t:b:s:d:i:rm")) != -1) {
       cout << "processing: " << (char)opt << endl;
       switch (opt) {
         case 'w':
@@ -300,6 +316,9 @@ int main(int argc, char **argv) {
           srand(seed);
           dag = generateTREE();
           break;
+        case 'm':
+          make_shader = true;
+          break;
         default:
           cout << "Unknown flag" << endl;
           exit(1);
@@ -313,6 +332,12 @@ int main(int argc, char **argv) {
         dag = DAGGenerator::generateFromString(dagstring);
     }
     printDag(dag);
-    video_generator *vg = new video_generator(width, height, framecount, num_threads, bitdepth);
-    vg->generateFromDAG(dag);
+    if(make_shader) {
+        shader_generator *sg = new shader_generator();
+        string shaderstr = sg->generateFromDAG(dag);
+        cout << shaderstr << endl;
+    } else {
+        video_generator *vg = new video_generator(width, height, framecount, num_threads, bitdepth);
+        vg->generateFromDAG(dag);
+    }
 }

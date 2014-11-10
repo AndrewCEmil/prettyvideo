@@ -3,6 +3,7 @@
 
 #include "EasyBMP.h"
 #include <vector>
+#include <string>
 #include "dagcontainer.h"
 
 class image_generator {
@@ -27,6 +28,12 @@ class video_generator {
     video_generator(int width, int height, int framecount, int threads, int bitdepth);
     void generateFromDAG(DAGContainer *dag);
     static void createImageRange(DAGContainer *dag, int width, int height, int starT, int endT, int maxT, int bitdepth);
+};
+
+class shader_generator {
+  public:
+    shader_generator() {}
+    std::string generateFromDAG(DAGContainer *dag);
 };
 
 class trival {
