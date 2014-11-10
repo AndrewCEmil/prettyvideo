@@ -19,6 +19,7 @@ class triop {
     triop *copyMe();
     static int getId();
     void checkAndExecute();
+    std::string get_subordinate_shader_string();
   private:
     static int nextId;
 };
@@ -42,12 +43,14 @@ class trimult : public triop {
   public:
     trimult();
     void execute();
+    std::string get_shader_string();
 };
 
 class tridiv : public triop {
   public:
     tridiv();
     void execute();
+    std::string get_shader_string();
 };
 
 class trisquare : public triop {
@@ -125,6 +128,7 @@ class tridis : public triop {
   public:
     tridis();
     void execute();
+    std::string get_shader_string();
 };
 
 class tripic : public triop {

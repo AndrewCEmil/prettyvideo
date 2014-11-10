@@ -60,6 +60,15 @@ void triop::checkAndExecute() {
     }   
 }
 
+string triop::get_subordinate_shader_string() {
+    string outstring;
+    int i;
+    for(i = 0; i < num_args; i++) {
+        outstring += myInputs[i]->outputNode->get_shader_string();
+    }
+    return outstring;
+}
+
 
 trival::trival(double inr, double ing, double inb) {
     r = inr;
@@ -87,7 +96,7 @@ void tridouble::execute() {
 string tridouble::get_shader_string() {
     ostringstream ss;
     ss << "vec3 val" << id << " = val" << myInputs[0]->outputNode->id << " * 2.0;" << endl;
-    string subordinate_string = myInputs[0]->outputNode->get_shader_string();
+    string subordinate_string = get_subordinate_shader_string();
     subordinate_string += ss.str();
     return subordinate_string;
 }
@@ -109,6 +118,14 @@ void trimult::execute() {
     inputVals.clear();
 }
 
+string trimult::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = val" << myInputs[0]->outputNode->id << " * val" << myInputs[1]->outputNode->id << ";" << endl;
+    string subordinate_string = get_subordinate_shader_string();
+    subordinate_string += ss.str();
+    return subordinate_string;
+}
+
 tridiv::tridiv() {
     name = "tridiv";
     id = getId();
@@ -124,6 +141,14 @@ void tridiv::execute() {
     myOutputs[0]->inputNode->inputVals.push_back(res);
     myOutputs[0]->inputNode->checkAndExecute();
     inputVals.clear();
+}
+
+string tridiv::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = val" << myInputs[0]->outputNode->id << " / val" << myInputs[1]->outputNode->id << ";" << endl;
+    string subordinate_string = get_subordinate_shader_string();
+    subordinate_string += ss.str();
+    return subordinate_string;
 }
 
 tridis::tridis() {
@@ -145,6 +170,13 @@ void tridis::execute() {
     inputVals.clear();
 }
 
+string tridis::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = (val" << myInputs[1]->outputNode->id << " * abs(val" << myInputs[0]->outputNode->id << ")) + (val" << myInputs[2]->outputNode->id << " * (1 - abs(val" << myInputs[0]->outputNode->id << "));" << endl;
+    string subordinate_string = get_subordinate_shader_string();
+    subordinate_string += ss.str();
+    return subordinate_string;
+}
 
 triconst::triconst() {
     name = "triconst";
@@ -502,7 +534,7 @@ void tripixel::execute() {
 
 string tripixel::get_shader_string() {
     ostringstream ss;
-    string subordinate_string = myInputs[0]->outputNode->get_shader_string();
+    string subordinate_string = get_subordinate_shader_string();
     ss << "gl_FragColor.rgb = val" << myInputs[0]->outputNode->id << ";" << endl;
     subordinate_string += ss.str();
     return subordinate_string;

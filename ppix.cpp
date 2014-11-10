@@ -248,7 +248,7 @@ video_generator::video_generator(int width, int height, int framecount, int thre
 
 string shader_generator::generateFromDAG(DAGContainer *dag) {
     ostringstream ss;
-    ss << "precision mediump float;" << endl << "varying vec2 position;" << endl << "void main() {" << endl;
+    ss << "precision mediump float;" << endl << "varying vec2 position;" << endl << "uniform float time;" << endl << "void main() {" << endl;
     string startstring = ss.str();
     ostringstream es;
     es << "gl_FragColor.a = 1.0;" << endl << "}" << endl;
