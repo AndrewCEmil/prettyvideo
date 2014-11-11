@@ -240,7 +240,7 @@ void trix::execute() {
 
 string trix::get_shader_string() {
     ostringstream ss;
-    ss << "vec3 val" << id << " = vec3(position.x);" << endl;
+    ss << "vec3 val" << id << " = vec3(vPosition.x);" << endl;
     return ss.str();
 }
 
@@ -306,7 +306,7 @@ void triy::execute() {
 
 string triy::get_shader_string() {
     ostringstream ss;
-    ss << "vec3 val" << id << " = vec3(position.y);" << endl;
+    ss << "vec3 val" << id << " = vec3(vPosition.y);" << endl;
     return ss.str();
 }
 
@@ -324,7 +324,7 @@ void trit::execute() {
 
 string trit::get_shader_string() {
     ostringstream ss;
-    ss << "vec3 val" << id << " = vec3(time);" << endl;
+    ss << "vec3 val" << id << " = vec3(vTime.x);" << endl;
     return ss.str();
 }
 

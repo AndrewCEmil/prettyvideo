@@ -1,3 +1,5 @@
+import subprocess
+
 from bottle import route
 from bottle import run
 from bottle import template
@@ -12,7 +14,8 @@ def canvas(filename):
     return static_file(filename, root='./static/')
 
 def get_shader_str():
-    return 'gl_FragColor = vec4(abs(sin(vTime.x * 3.14159)), 0.0, 0.0, 1.0);'
+    shader = subprocess.check_output(["./ppix", "-m", "-r"])
+    return shader
 
 @route('/shade')
 def shade():
