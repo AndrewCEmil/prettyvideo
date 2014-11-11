@@ -57,12 +57,14 @@ class trisquare : public triop {
   public:
     trisquare();
     void execute();
+    std::string get_shader_string();
 };
 
 class triroot : public triop {
   public:
     triroot();
     void execute();
+    std::string get_shader_string();
 };
 
 class trisin : public triop {
@@ -72,12 +74,14 @@ class trisin : public triop {
     void execute();
     double _phase;
     double _freq;
+    std::string get_shader_string();
 };
 
 class trihighest : public triop {
   public:
     trihighest();
     void execute();
+    std::string get_shader_string();
 };
 
 class trilevel : public triop {
@@ -92,24 +96,28 @@ class triavg : public triop {
   public:
     triavg();
     void execute();
+    std::string get_shader_string();
 };
 
 class trimod : public triop {
   public:
     trimod();
     void execute();
+    std::string get_shader_string();
 };
 
 class triwell : public triop {
   public:
     triwell();
     void execute();
+    std::string get_shader_string();
 };
 
 class tritent : public triop {
   public:
     tritent();
     void execute();
+    std::string get_shader_string();
 };
 
 class trirgbtoycrcb : public triop {
@@ -192,6 +200,7 @@ class triconst : public trigenerator {
     void setConstri(std::shared_ptr<trival> constri);
     std::shared_ptr<trival> _constri;
     void execute();
+    std::string get_shader_string();
 };
 
 class trirand : public trigenerator {

@@ -85,10 +85,10 @@ vector<string> getAllOps() {
     out.push_back("trimod");
     out.push_back("triwell");
     out.push_back("tritent");
-    out.push_back("trilevel");
+    //out.push_back("trilevel");
 
-    out.push_back("triycrcbtorgb");
-    out.push_back("trirgbtoycrcb");
+    //out.push_back("triycrcbtorgb");
+    //out.push_back("trirgbtoycrcb");
     out.push_back("tridis");
     return out;
 }
@@ -102,6 +102,7 @@ vector<string> getAllDims() {
 
     out.push_back("triy");
     out.push_back("trix");
+    out.push_back("triconst");
     return out;
 }
 

@@ -172,7 +172,7 @@ void tridis::execute() {
 
 string tridis::get_shader_string() {
     ostringstream ss;
-    ss << "vec3 val" << id << " = (val" << myInputs[1]->outputNode->id << " * abs(val" << myInputs[0]->outputNode->id << ")) + (val" << myInputs[2]->outputNode->id << " * (1 - abs(val" << myInputs[0]->outputNode->id << "));" << endl;
+    ss << "vec3 val" << id << " = (val" << myInputs[1]->outputNode->id << " * abs(val" << myInputs[0]->outputNode->id << ")) + (val" << myInputs[2]->outputNode->id << " * (1.0 - abs(val" << myInputs[0]->outputNode->id << ")));" << endl;
     string subordinate_string = get_subordinate_shader_string();
     subordinate_string += ss.str();
     return subordinate_string;
@@ -200,6 +200,12 @@ void triconst::setConstri(shared_ptr<trival> constri) {
 void triconst::execute() {
     myOutputs[0]->inputNode->inputVals.push_back(_constri);
     myOutputs[0]->inputNode->checkAndExecute();
+}
+
+string triconst::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = vec3(" << _constri->r << "," << _constri->g << "," << _constri->b << ");" << endl;
+    return ss.str();
 }
 
 trirand::trirand() {
@@ -343,6 +349,14 @@ void trisquare::execute() {
     inputVals.clear();
 }
 
+string trisquare::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = val" << myInputs[0]->outputNode->id << " * val" << myInputs[0]->outputNode->id << ";" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
+}
+
 triroot::triroot() {
     name = "triroot";
     id = getId();
@@ -357,6 +371,14 @@ void triroot::execute() {
     myOutputs[0]->inputNode->inputVals.push_back(res);
     myOutputs[0]->inputNode->checkAndExecute();
     inputVals.clear();
+}
+
+string triroot::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = sqrt(val" << myInputs[0]->outputNode->id << ");" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
 }
 
 trisin::trisin() {
@@ -382,6 +404,14 @@ void trisin::execute() {
     inputVals.clear();
 }
 
+string trisin::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = sin(val" << myInputs[0]->outputNode->id << ");" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
+}
+
 trihighest::trihighest() {
     name = "trihighest";
     id = getId();
@@ -397,6 +427,14 @@ void trihighest::execute() {
     myOutputs[0]->inputNode->inputVals.push_back(res);
     myOutputs[0]->inputNode->checkAndExecute();
     inputVals.clear();
+}
+
+string trihighest::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = max(val" << myInputs[0]->outputNode->id << ", val" << myInputs[1]->outputNode->id << ");" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
 }
 
 trilevel::trilevel() {
@@ -439,6 +477,14 @@ void triavg::execute() {
     inputVals.clear();
 }
 
+string triavg::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = (val" << myInputs[0]->outputNode->id << " + val" << myInputs[1]->outputNode->id << ") / 2.0;" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
+}
+
 trimod::trimod() {
     name = "trimod";
     id = getId();
@@ -454,6 +500,14 @@ void trimod::execute() {
     myOutputs[0]->inputNode->inputVals.push_back(res);
     myOutputs[0]->inputNode->checkAndExecute();
     inputVals.clear();
+}
+
+string trimod::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = mod(val" << myInputs[0]->outputNode->id << ", val" << myInputs[1]->outputNode->id << ");" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
 }
 
 triwell::triwell() {
@@ -472,6 +526,16 @@ void triwell::execute() {
     inputVals.clear();
 }
 
+//TODO could this really be right?
+string triwell::get_shader_string() {
+    ostringstream ss;
+    int inId = myInputs[0]->outputNode->id;
+    ss << "vec3 val" << id << " = (1.0 - (16.0 / (1.0 + (val" << inId << " * val" << inId << "))));" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
+}
+
 tritent::tritent() {
     name = "tritent";
     id = getId();
@@ -486,6 +550,14 @@ void tritent::execute() {
     myOutputs[0]->inputNode->inputVals.push_back(res);
     myOutputs[0]->inputNode->checkAndExecute();
     inputVals.clear();
+}
+
+string tritent::get_shader_string() {
+    ostringstream ss;
+    ss << "vec3 val" << id << " = 1.0 - (2.0 * abs(val" << myInputs[0]->outputNode->id << "));" << endl;
+    string substring = get_subordinate_shader_string();
+    substring += ss.str();
+    return substring;
 }
 
 trirgbtoycrcb::trirgbtoycrcb() {
@@ -503,6 +575,8 @@ void trirgbtoycrcb::execute() {
     myOutputs[0]->inputNode->checkAndExecute();
     inputVals.clear();
 }
+
+//TODO shaders for these ones will be a little annoying
 
 triycrcbtorgb::triycrcbtorgb() {
     name = "triycrcbtorgb";
@@ -538,5 +612,4 @@ string tripixel::get_shader_string() {
     ss << "gl_FragColor.rgb = val" << myInputs[0]->outputNode->id << ";" << endl;
     subordinate_string += ss.str();
     return subordinate_string;
-    
 }
