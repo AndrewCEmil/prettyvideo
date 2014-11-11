@@ -287,10 +287,10 @@ int main(int argc, char **argv) {
     int bitdepth = 32;
     int seed = time(NULL);
     bool make_shader = false;
+    bool random_dag = true;
     string dagstring = "tripixel triavg trix trit";
     DAGContainer *dag = NULL;
     while ((opt = getopt(argc, argv, "w:h:f:t:b:s:d:i:rm")) != -1) {
-      cout << "processing: " << (char)opt << endl;
       switch (opt) {
         case 'w':
           width = atoi(optarg);
@@ -311,11 +311,11 @@ int main(int argc, char **argv) {
           seed = atoi(optarg);
           break;
         case 'd':
+          random_dag = false;
           dagstring = string(optarg);
           break;
         case 'r':
-          srand(seed);
-          dag = generateTREE();
+          random_dag = true;
           break;
         case 'm':
           make_shader = true;
@@ -326,13 +326,12 @@ int main(int argc, char **argv) {
       }
     }
     srand(seed);
-    double curT;
-    //first get dag
-    cout << "Generating TREE" << endl;
-    if(dag == NULL) {
+    if(!random_dag) {
         dag = DAGGenerator::generateFromString(dagstring);
+    } else {
+        dag = generateTREE();
     }
-    printDag(dag);
+    double curT;
     if(make_shader) {
         shader_generator *sg = new shader_generator();
         string shaderstr = sg->generateFromDAG(dag);

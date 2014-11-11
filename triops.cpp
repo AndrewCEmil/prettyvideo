@@ -185,10 +185,6 @@ triconst::triconst() {
     double randr = ((double) rand() / (RAND_MAX));
     double randg = ((double) rand() / (RAND_MAX));
     double randb = ((double) rand() / (RAND_MAX));
-    cout << "randr: " << randr;
-    cout << "randg: " << randg;
-    cout << "randb: " << randb;
-
     _constri = shared_ptr<trival>((new trival(randr, randg, randb)));
     num_args = 0;
 }
