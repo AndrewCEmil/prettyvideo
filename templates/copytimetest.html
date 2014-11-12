@@ -141,8 +141,8 @@
         if(startTime === 0) {
             startTime = timeNow;
         }
-        curTime = timeNow - startTime;
-        curTime = (curTime % maxTime) / maxTime;
+        curTime = (timeNow - startTime) / 10000;
+        //curTime = (curTime % maxTime) / maxTime;
     }
 
 
