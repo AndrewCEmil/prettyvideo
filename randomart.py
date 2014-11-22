@@ -141,7 +141,7 @@ class VariableT():
         print ("  " * depth) + "Constant"
     def eval(self,x,y,t): return (t,t,t)
     def getShader(self):
-        return "vec3 val%d = vec3(vtime.x);\n" % self.id
+        return "vec3 val%d = vec3(vTime.x);\n" % self.id
 
 class Constant():
     arity = 0
@@ -245,7 +245,7 @@ class Well():
         return (well(r), well(g), well(b))
     def getShader(self):
         substr = self.e.getShader()
-        substr += "vec3 val{0} = 1.0 - (2.0 / (pow(1.0 + pow(val{1}, 2.0), 8.0)));\n".format(self.id, self.e.id)
+        substr += "vec3 val{0} = 1.0 - (2.0 / (pow(1.0 + pow(val{1}, vec3(2.0)), vec3(8.0))));\n".format(self.id, self.e.id)
         return substr
 
 class Tent():

@@ -17,9 +17,18 @@ def get_shader_str():
     shader = subprocess.check_output(["./ppix", "-m", "-r"])
     return shader
 
+def get_shaderp_str():
+    shader = subprocess.check_output(["python", "randomart.py"])
+    return shader
+
 @route('/shade')
 def shade():
     shaderstr = get_shader_str()
+    return template('./templates/copytimetest.html', shaderstr=shaderstr)
+
+@route('/shadep')
+def shadep():
+    shaderstr = get_shaderp_str()
     return template('./templates/copytimetest.html', shaderstr=shaderstr)
 
 run(host='localhost', port=8080)
