@@ -398,7 +398,6 @@ class Art():
 
     def __init__(self, size=4096):
         self.size=size
-        self.MakeArt()
 
     def MakeArt(self):
         xpixels = int(math.sqrt(self.size))
@@ -406,35 +405,12 @@ class Art():
         frames = 256
         art = generate(random.randrange(20,150))
         #art.printme(0)
-        print(art.getShader())
-        #print extra lines
-        print("gl_FragColor.rgb = val{0};".format(art.id))
-        print("gl_FragColor.a = 1.0;")
-        """
-        print art
-        for t in range(frames):
-            im = Image.new('RGB', (xpixels, ypixels))
-            draw = ImageDraw.Draw(im)
-
-            for x in range(xpixels):
-                for y in range(ypixels):
-                    u = float(x) / float(xpixels) - 1.0
-                    v = float(y) / float(ypixels) - 1.0
-                    tt = float(t) / float(frames) - 1.0
-                    (r, g, b) = art.eval(u, v, tt)
-                    rval = int(256*r)
-                    gval = int(256*g)
-                    bval = int(256*b)
-                    draw.point([(x,y)],fill=(rval, gval, bval))
-
-            #im.save("test" + str(t) + ".png", "PNG")
-            outstr = "test%05d.png" % t
-            print outstr
-            im.save(outstr, "PNG")
-            #im.save("test%05d.png" % t, "PNG")
-            print t
-            """
-
+        outstr = art.getShader()
+        outstr += "gl_FragColor.rgb = val{0};".format(art.id)
+        outstr += "gl_FragColor.a = 1.0;"
+        return outstr
 
 # Main program
-arg = Art(512*512)
+if __name__ == "__main__":
+    art = Art(512*512)
+    print art.MakeArt()

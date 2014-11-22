@@ -1,4 +1,5 @@
 import subprocess
+import randomart
 
 from bottle import route
 from bottle import run
@@ -18,8 +19,8 @@ def get_shader_str():
     return shader
 
 def get_shaderp_str():
-    shader = subprocess.check_output(["python", "randomart.py"])
-    return shader
+    art = randomart.Art(1)
+    return art.MakeArt()
 
 @route('/shade')
 def shade():
