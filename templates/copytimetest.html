@@ -1,9 +1,10 @@
 <html>
 
 <head>
-<title>Learning WebGL &mdash; lesson 2</title>
+<title>SHADE</title>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
+<link rel="stylesheet" type="text/css" href="static/ace.css" />
 <script type="text/javascript" src="static/glMatrix-0.9.5.min.js"></script>
 <script type="text/javascript" src="static/webgl-utils.js"></script>
 
@@ -228,6 +229,10 @@
 
     function webGLStart() {
         var canvas = document.getElementById("lesson02-canvas");
+
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+
         initGL(canvas);
         initShaders();
         initBuffers();
@@ -246,12 +251,7 @@
 
 
 <body onload="webGLStart();">
-    <a href="http://learningwebgl.com/blog/?p=134">&lt;&lt; Back to Lesson 2</a><br />
-
-    <canvas id="lesson02-canvas" style="border: none;" width="500" height="500"></canvas>
-
-    <br/>
-    <a href="http://learningwebgl.com/blog/?p=134">&lt;&lt; Back to Lesson 2</a><br />
+    <canvas id="lesson02-canvas" width="100" height="100"></canvas>
 </body>
 
 </html>
