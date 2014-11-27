@@ -22,6 +22,10 @@ def get_shaderp_str():
     art = randomart.Art(1)
     return art.MakeArt()
 
+def get_shaders_str(seed):
+    art = randomart.Art(size=1, seed=seed)
+    return art.MakeArt()
+
 @route('/shade')
 def shade():
     shaderstr = get_shader_str()
@@ -30,6 +34,11 @@ def shade():
 @route('/shadep')
 def shadep():
     shaderstr = get_shaderp_str()
+    return template('./templates/copytimetest.html', shaderstr=shaderstr)
+
+@route('/shades/<seed>')
+def shades(seed):
+    shaderstr = get_shaders_str(seed)
     return template('./templates/copytimetest.html', shaderstr=shaderstr)
 
 run(host='localhost', port=8080)

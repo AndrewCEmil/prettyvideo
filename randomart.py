@@ -396,10 +396,13 @@ class Art():
     """A simple graphical user interface for random art. It displays the image,
        and the 'Again!' button."""
 
-    def __init__(self, size=4096):
+    def __init__(self, seed=None, size=4096):
         self.size=size
+        self.seed = seed
 
     def MakeArt(self):
+        if self.seed is not None:
+            random.seed(self.seed)
         xpixels = int(math.sqrt(self.size))
         ypixels = xpixels
         frames = 256
