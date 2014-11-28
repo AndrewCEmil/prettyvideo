@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/ace.css" />
+    <title>ACE</title>
+    <script type="text/javascript">
+      function getRandomShader() {
+          window.location = "/shadep";
+      }
+
+      function getSeedShader() {
+          var seed = document.getElementById("seedtext").value;
+          window.location = "/shades/" + seed
+      }
+    </script>
+  </head>
+<body>
+<p>Hello World</p>
+
+<p><button type=button onclick="getRandomShader()">Get a RANDOM shader</button></p>
+
+<p>Get a SEEDED shader <input type=text id="seedtext"></input> <button type=button onclick="getSeedShader()">Get a RANDOM shader</button></p>
+</body>
+</html>
