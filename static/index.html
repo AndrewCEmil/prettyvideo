@@ -9,6 +9,9 @@
 
       function getSeedShader() {
           var seed = document.getElementById("seedtext").value;
+          if(seed == "") {
+              seed = "test";
+          }
           window.location = "/shades/" + seed
       }
     </script>
