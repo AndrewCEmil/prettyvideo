@@ -66,9 +66,6 @@
 
 import math
 import random
-import Image 
-import ImageDraw
-#from Tkinter import * # Change "Tkinter" to "tkinter" in Python 3
 
 # Utility functions
 
