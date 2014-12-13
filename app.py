@@ -31,4 +31,4 @@ def shades(seed):
 def home():
     return static_file("index.html", root="./static/")
 
-run(host='localhost', port=8080)
+run(host='localhost', port=8080, server="cherrypy")
